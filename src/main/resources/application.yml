@@ -1,0 +1,23 @@
+server:
+  port: 8082
+#CONFIGURACION DE EUREKA DEL SERVIDOR DE REGISTRO Y DESCUBRIMIENTO
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8084/eureka/
+  instance:
+    instance-id: ${spring.application.name}
+
+spring:
+  application:
+    name: GatewayService
+# CONFIGURACION  DE SPRING CLOUD GATEWAY
+spring.cloud.gateway:
+  routes:
+  - id: productosService # DEFINICION DE RUTA LLAMADA PRODUCTOSSERVICE
+    uri: lb://servicioProductos #URI DE LA INSTANCIA BALANCEADA POR CARGA
+    predicates:
+    - Path=/api/** # PREDICADO QUE ESPECIFICA QUE ESTA RUTA SE APLICA A CUALQUIER SOLICITUD CON RUTA "/api/**"
+
+
+
